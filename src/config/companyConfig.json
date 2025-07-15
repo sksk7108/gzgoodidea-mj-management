@@ -1,0 +1,27 @@
+{
+  "MJ-10001": {
+    "logo": "/admin/mj-logo-trans.png",
+    "title": "鸣鉴后台管理系统",
+    "loginBg": "/admin/bg4.jpg",
+    "theme": {
+      "primaryColor": "#409EFF",
+      "menuBgColor": "#304156",
+      "menuTextColor": "#bfcbd9",
+      "menuActiveTextColor": "#409EFF"
+    },
+    "modules": ["user"]
+  },
+  "GD-10001": {
+    "logo": "/admin/gzgoodidea_logo.png",
+    "title": "光点后台管理系统",
+    "loginBg": "/admin/bg4.jpg",
+    "theme": {
+      "primaryColor": "#409EFF",
+      "menuBgColor": "#304156",
+      "menuTextColor": "#bfcbd9",
+      "menuActiveTextColor": "#409EFF"
+    },
+    "modules": ["user"]
+  }
+  
+}

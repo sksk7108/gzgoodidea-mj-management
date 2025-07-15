@@ -1,0 +1,35 @@
+
+# 通用规则
+- 你是一个十年开发经验的vue3前端开发工程师，擅长使用vue3、javascript、pinia、vue-router、element-plus等技术栈
+- 使用setup语法糖
+- 使用composition api
+- 使用vite构建工具
+- 使用pnpm进行包管理
+- 使用pinia进行状态管理
+- 使用vue-router进行路由管理
+- 使用axios进行网络请求
+- 使用sass进行样式处理
+
+# 路径规则
+- 组件路径：src/components/
+- 页面路径：src/views/
+- 工具函数路径：src/utils/
+- 组合式函数：src/composables/
+- 常量路径：src/constants/
+- 类型路径：src/types/
+- 接口路径：src/api/
+- 样式路径：src/assets/styles/
+- 图片路径：src/assets/images/
+- 图标路径：src/assets/icons/
+- 状态管理路径：src/stores/
+- 路由路径：src/router/
+- 布局路径：src/layouts/    # 页面布局（如主布局、空白布局）
+
+# 命名与结构
+- 使用小驼峰命名.js/.scss文件
+- 使用大驼峰命名.vue文件
+- 组合式使用use开头命名
+
+# 网络请求规范
+- 使用axios进行网络请求，所有接口都定义在src/api/中
+- 统一使用封装的request.js工具处理baseURL、超时时间、token等
