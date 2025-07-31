@@ -352,9 +352,9 @@ onMounted(() => {
             />
           </template>
         </el-table-column>
-        <el-table-column prop="lastLoginTime" label="最后登录时间" width="180">
+        <el-table-column prop="lastRequestTime" label="最后使用时间" width="180">
           <template #default="scope">
-            {{ formatDate(scope.row.lastLoginTime) }}
+            {{ formatDate(scope.row.lastRequestTime) }}
           </template>
         </el-table-column>
         <!-- <el-table-column prop="last_login_ip" label="最后登录IP" width="140" /> -->
