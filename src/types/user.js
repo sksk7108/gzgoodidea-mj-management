@@ -38,12 +38,13 @@ export const defaultUserForm = {
   email: '',
   username: '',
   password: '',
-  user_status: UserStatus.NORMAL,
+  userStatus: UserStatus.NORMAL,
   nickname: '',
   avatar: '',
   role: '',
   ppv: '',
   pfv: '',
-  special_array: '',
-  power_point: 0
+  userType: 0,
+  specialArray: '',
+  powerPoint: 0
 } 

@@ -30,6 +30,7 @@ const dialogType = ref('add') // add, edit, view
 const dialogLoading = ref(false)
 const formRef = ref(null)
 
+
 // 表单数据
 const form = reactive({
   ...defaultUserForm
@@ -49,6 +50,7 @@ const adminPowerPoint = ref(0)
 const powerPointForm = reactive({
   userId: null,
   username: '',
+  description: '',
   currentPowerPoint: 0,
   assignAmount: 50
 })
@@ -142,6 +144,9 @@ const submitForm = async () => {
         await createUser(form)
         ElMessage.success('添加成功')
       } else if (dialogType.value === 'edit') {
+        delete form.lastRequestTime
+        delete form.createTime
+        delete form.updateTime
         await updateUser(form)
         ElMessage.success('更新成功')
       }
@@ -238,7 +243,12 @@ const handleAssignPowerPoint = async (row) => {
 
 // 提交算力点分配
 const submitPowerPointAssign = async () => {
+  if (powerPointLoading.value) return
   if (!powerPointFormRef.value) return
+  if (powerPointForm.assignAmount <= 0 || powerPointForm.assignAmount > adminPowerPoint.value) {
+    ElMessage.warning('增加数量不能超过您的算力点余额')
+    return
+  }
   
   await powerPointFormRef.value.validate(async (valid) => {
     if (!valid) return
@@ -251,7 +261,7 @@ const submitPowerPointAssign = async () => {
     
     powerPointLoading.value = true
     try {
-      await assignPowerPoint(powerPointForm.userId, powerPointForm.assignAmount)
+      await assignPowerPoint(powerPointForm.userId, powerPointForm.assignAmount, powerPointForm.description)
       ElMessage.success('算力点增加成功')
       powerPointDialogVisible.value = false
       getList() // 刷新列表
@@ -271,6 +281,7 @@ const handlePowerPointDialogClose = () => {
   powerPointForm.username = ''
   powerPointForm.currentPowerPoint = 0
   powerPointForm.assignAmount = 0
+  powerPointForm.description = ''
 }
 
 // 格式化用户状态
@@ -432,7 +443,7 @@ onMounted(() => {
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="状态" prop="userStatus">
               <el-select v-model="form.userStatus" placeholder="请选择状态" :disabled="dialogType === 'view'">
                 <el-option
@@ -444,6 +455,24 @@ onMounted(() => {
               </el-select>
             </el-form-item>
           </el-col>
+
+          <el-col :span="6">
+            <el-form-item v-if="dialogType !== 'view' && dialogType !== 'add'" label="用户类型" prop="userType">
+              <el-select v-model="form.userType" placeholder="请选择用户类型" :disabled="dialogType === 'view'">
+                <el-option
+                  label="正式用户"
+                  :value="0"
+                />
+                <el-option
+                  label="内测用户"
+                  :value="1"
+                />
+                
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          
           <el-col v-if="dialogType === 'view'" :span="12">
             <el-form-item label="算力点" prop="powerPoint">
               <el-input-number v-model="form.powerPoint" :min="0" :disabled="dialogType === 'view'" />
@@ -511,6 +540,9 @@ onMounted(() => {
             controls-position="right"
             style="width: 100%"
           />
+        </el-form-item>
+        <el-form-item label="充值原因" prop="description">
+          <el-input v-model="powerPointForm.description" type="textarea" :rows="2" placeholder="请输入充值原因" />
         </el-form-item>
       </el-form>
       <template #footer>

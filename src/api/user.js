@@ -93,12 +93,13 @@ export function resetUserPassword(id) {
  * 分配算力点给用户
  * @param {number|string} userId 用户ID
  * @param {number} powerPoint 分配的算力点数量
+ * @param {string} description 充值原因
  * @returns {Promise}
  */
-export function assignPowerPoint(userId, powerPoint) {
+export function assignPowerPoint(userId, powerPoint, description) {
   return request({
     url: '/user/assignPowerPoint',
     method: 'post',
-    data: { id: userId, powerPoint }
+    data: { id: userId, powerPoint, description }
   })
 }
