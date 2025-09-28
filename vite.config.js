@@ -15,7 +15,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/system': {
-        // target: 'http://192.168.2.29:8086',
+        // target: 'http://192.168.2.27:8086',
         target: 'https://raas.baomi-ai.com',
         changeOrigin: true,
         secure: false,

@@ -50,9 +50,13 @@ export const useAppStore = defineStore('app', () => {
   const isCollapse = ref(false)
   const config = ref(storedConfig || defaultConfig)
   const loading = ref(false)
+  const isLoaded = ref(false)
   
   // 从API获取公司配置
   const fetchCompanyConfig = async (companyId) => {
+    if (isLoaded.value) return true
+    if (loading.value) return false
+
     if (!companyId) {
       companyId = getCompanyIdFromUrl()
     }
@@ -60,12 +64,7 @@ export const useAppStore = defineStore('app', () => {
     if (!companyId) {
       return false
     }
-    
-    // 如果存储的配置中已有相同的companyId，直接使用
-    if (config.value.companyId === companyId) {
-      return true
-    }
-    
+
     loading.value = true
     try {
       // const res = await getCompanyConfig(companyId)
@@ -88,7 +87,9 @@ export const useAppStore = defineStore('app', () => {
         
         // 保存公司ID
         saveCompanyId(companyId)
-        
+
+        isLoaded.value = true
+
         applyTheme()
         return true
       } else {
@@ -136,6 +137,16 @@ export const useAppStore = defineStore('app', () => {
     config.value = defaultConfig
     localStorage.removeItem(STORE_CONFIG_KEY)
   }
+
+  // 重置状态
+  const resetState = () => {
+    isCollapse.value = false
+    config.value = { ...defaultConfig }
+    loading.value = false
+    isLoaded.value = false
+    localStorage.removeItem(STORE_CONFIG_KEY)
+    localStorage.removeItem('store_company_id')
+  }
   
   // 如果有存储的配置，初始化时应用主题
   if (storedConfig) {
@@ -150,6 +161,7 @@ export const useAppStore = defineStore('app', () => {
     applyTheme,
     isModuleAvailable,
     toggleSideBar,
-    clearConfig
+    clearConfig,
+    resetState
   }
 }) 

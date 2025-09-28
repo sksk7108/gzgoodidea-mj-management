@@ -20,20 +20,20 @@ const routes = [
   },
   {
     path: '',
-    redirect: '/user',
+    redirect: '/dashboard',
     hidden: true
   },
   {
     path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/dashboard/dashboard',
     meta: { title: '仪表盘', icon: 'Odometer', module: 'dashboard' },
     children: [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        // component: () => import('@/views/dashboard/index.vue'),
-        component: EmptyLayout,
+        component: () => import('@/views/dashboard/index.vue'),
+        // component: EmptyLayout,
         meta: { title: '仪表盘', icon: 'Odometer', module: 'dashboard' }
       }
     ]
@@ -109,7 +109,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           // 获取用户信息
-          await userStore.getUserInfoAction()
+          // await userStore.getUserInfoAction()
           
           // 检查模块权限
           const appStore = useAppStore()

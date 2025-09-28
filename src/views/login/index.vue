@@ -152,11 +152,13 @@ const handleLogin = async () => {
 const initCompanyConfig = async () => {
   configLoading.value = true
   
-  const companyId = route.params.companyId || getCompanyIdFromUrl()
+  const companyId = route.params.companyId
   if (companyId) {
     try {
+      appStore.resetState()
       // 从API获取公司配置
       await appStore.fetchCompanyConfig(companyId)
+      console.log(companyId)
       document.title = appStore.config.title || '后台管理系统'
       
       // 获取保存的凭证

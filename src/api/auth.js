@@ -18,10 +18,13 @@ export function getUserInfo() {
 }
 
 // 用户登出
-export function logout() {
+export function logout(token) {
   return request({
     url: '/auth/logout',
-    method: 'post'
+    method: 'post',
+    headers: {
+      Authorization: `${token}`
+    }
   })
 }
 

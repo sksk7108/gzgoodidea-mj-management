@@ -52,16 +52,12 @@ export const useUserStore = defineStore('user', () => {
   const logoutAction = async () => {
     try {
       if (token.value) {
-        logout()
+        logout(token.value)
       }
       resetState()
       
-      // 清除配置数据
-      const appStore = useAppStore()
-      appStore.clearConfig()
-      
       // 清除公司ID
-      clearCompanyId()
+      // clearCompanyId()
       
       return true
     } catch (error) {
@@ -76,7 +72,6 @@ export const useUserStore = defineStore('user', () => {
     userInfo.value = {}
     roles.value = []
     permissions.value = []
-    clearCompanyConfig()
     localStorage.removeItem('token')
   }
   
